@@ -1,70 +1,41 @@
-// RPS game
+// My Javascript
 
-// After writing the code multiple times, i want to do by my self and let's see how far id go.
-// I will try to use the knowledge i have gained from the previous lessons and see how far i can go.
+// input of from the DOM
 
-// Get Start Scores.
+const playerDisplay = document.getElementById('player-choice');
+const computerDisplay = document.getElementById('computer-choice');
+const resultDisplay = document.getElementById('resultDsisplay');
 
 let playerScore = 0;
 let computerScore = 0;
 
-// Get Computer input
-function getComputerChoice () {
-    const choices =[ 'rock', 'paper', 'scissors'];
-    return choices[Math.floor(Math.random() * choices.length)];
-}
+// The Game choice
+const choices = ['rock', 'paper', 'scissors'];
 
-// Get User Input
+function Game(playerChoice) {
 
-function getPlayerChoice() {
-    let choice = prompt("Enter your choice: 'Rock, Paper, Scissors'").toLowerCase();
-    while (choice !== 'rock' && choice !== 'paper' && choice !== 'scissors') {
-        choice = prompt("Invalid Entry! Enter your choice: 'Rock, Paper, Scissors'").toLowerCase();
-    }
-    return choice;
-}
+    const getComputerChoice = choices[Math.floor(Math.random() * choices.length)];
 
-// The game rule and the winning conditions
+    const getResult = function (playerChoice, getComputerChoice) {
+        const winner = {
+            rock: 'scissors',
+            paper: 'rock',
+            scissors: 'paper'
+        };
 
-function playRound(playerChoice, computerChoice) {
-    const winner = {
-        rock: 'scissors',
-        paper: 'rock',
-        scissors: 'paper'
-    };
-
-    if (playerChoice === computerChoice) {
-        return 'It\'s a tie!';
-    } else if (winner[playerChoice] === computerChoice) {
-        playerScore++;
-        return "You Win! " + playerChoice + " beats " + computerChoice;
-    } else {
-        computerScore++;
-        return "You Lose! " + computerChoice + " beats " + playerChoice;
-    }
-}
-
-// The game function
-
-function playGame() {
-    for (let i = 0; i < 5; i++) {
-        const playerChoice = getPlayerChoice();
-        const computerChoice = getComputerChoice();
-        console.log(playRound(playerChoice, computerChoice));
+        if (playerChoice === getComputerChoice) {
+            return 'It\'s a tie! 🤝 ';
+        } else if (winner[playerChoice] === getComputerChoice) {
+            playerScore++;
+            return 'You win! 🎉 ' + playerChoice + ' beats ' + getComputerChoice;
+        } else {
+            computerScore++;
+            return 'You lose! 💩 ' + getComputerChoice + ' beats ' + playerChoice;
+        }
     }
 
-    console.log("Final Score:");
-    console.log(`You: ${playerScore} | Computer: ${computerScore}`);
-
-    // The Scoring System
-
-    if (playerScore > computerScore) {
-        console.log("You Win!");
-    } else if (playerScore < computerScore) {
-        console.log("You Lose!");
-    } else {
-        return "It's a tie!";
-    }
+    const result = getResult(playerChoice, getComputerChoice);
+    resultDisplay.textContent = result;
+    playerDisplay.textContent = `PLAYER: ${playerChoice}`;
+    computerDisplay.textContent = `COMPUTER: ${getComputerChoice}`;
 }
-
-playGame();
